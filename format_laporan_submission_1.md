@@ -113,7 +113,7 @@ hujan sedang      0.00      0.00      0.00         6
 
 Model masih kesulitan mengenali kelas “hujan sedang” karena datanya sedikit (hanya 6).
 
-![Confusion Matrix](visual_confusion_matrix.png)
+![Confusion Matrix](https://github.com/Robbysaidiii/Machine_Learning_Terapan/blob/main/Cuplikan%20layar%202025-05-24%20234906.png)
 
 ---
 
