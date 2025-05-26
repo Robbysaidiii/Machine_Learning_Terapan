@@ -143,17 +143,8 @@ Proyek ini berhasil mengklasifikasikan intensitas curah hujan menggunakan data c
 
 ---
 
-> **Catatan:** Jika ingin menyertakan gambar visualisasi atau grafik confusion matrix, disarankan mengupload gambar ke GitHub lalu gunakan link markdown seperti berikut:
 
-```markdown
-![Confusion Matrix](https://github.com/username/project/images/conf_matrix.png)
-```
+![Confusion Matrix](https://github.com/Robbysaidiii/Machine_Learning_Terapan/blob/main/Cuplikan%20layar%202025-05-24%20234906.png)
+
 
 ---
-
-Apakah kamu ingin saya bantu:
-
-* Menuliskan versi markdown-nya untuk GitHub?
-* Memperbaiki file `.ipynb` dan hasilkan ulang file `report.md` dari isi notebook?
-
-Silakan beri arahan.
