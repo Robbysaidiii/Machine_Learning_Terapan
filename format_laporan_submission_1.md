@@ -1,7 +1,3 @@
-Berikut adalah penjelasan lengkap dari isi file notebook `Robbysaidi_Machine_Learning_Terapan.ipynb` yang telah kamu unggah, dengan struktur yang sudah **disesuaikan sepenuhnya** dengan format laporan proyek Machine Learning seperti yang kamu minta:
-
----
-
 # 🧠 Laporan Proyek Machine Learning - Robby Saidi
 
 ---
