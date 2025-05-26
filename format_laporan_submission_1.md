@@ -1,5 +1,3 @@
-Berikut adalah **penjelasan lengkap dan terstruktur** dari hasil proyek Machine Learning Anda, **menggabungkan pendekatan klasifikasi dan regresi**, sesuai dengan isi notebook dan evaluasi model yang telah dilakukan:
-
 ---
 
 # 🧠 Laporan Proyek Machine Learning – Robby Saidi Prasetyo
