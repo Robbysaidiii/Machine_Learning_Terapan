@@ -43,7 +43,7 @@ Dataset berisi data cuaca harian yang digunakan untuk membangun model prediksi c
 
 * Jumlah baris: 719
 * Jumlah kolom: 9
-* Sumber data: *(upload dataset ke GitHub atau Google Drive publik jika ingin dibagikan)*
+* Sumber data: *(https://drive.google.com/file/d/1IRHTHc6uCckj41YYpFgzYOT2PoBmpXeK/view?usp=drive_link)*
 
 ### 🔍 Deskripsi Variabel:
 
@@ -147,4 +147,4 @@ Proyek ini berhasil mengklasifikasikan intensitas curah hujan menggunakan data c
 
 ---
 
-![Confusion Matrix](https://github.com/Robbysaidiii/Machine_Learning_Terapan/blob/main/Cuplikan%20layar%202025-05-24%20234906.png)
+![Confusion Matrix](https://github.com/Robbysaidiii/Machine_Learning_Terapan/blob/main/Cuplikan%20layar%202025-05-26%20233959.png)
