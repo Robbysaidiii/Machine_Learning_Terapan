@@ -147,4 +147,4 @@ Proyek ini berhasil mengklasifikasikan intensitas curah hujan menggunakan data c
 
 ---
 
-![Confusion Matrix](https://github.com/Robbysaidiii/Machine_Learning_Terapan/blob/main/Cuplikan%20layar%202025-05-24%20234906.png)
+![Confusion Matrix](https://github.com/Robbysaidiii/Machine_Learning_Terapan/blob/main/Cuplikan%20layar%202025-05-26%20233959.png)
