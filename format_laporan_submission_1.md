@@ -43,7 +43,7 @@ Dataset berisi data cuaca harian yang digunakan untuk membangun model prediksi c
 
 * Jumlah baris: 719
 * Jumlah kolom: 9
-* Sumber data: *(upload dataset ke GitHub atau Google Drive publik jika ingin dibagikan)*
+* Sumber data: *(https://drive.google.com/file/d/1IRHTHc6uCckj41YYpFgzYOT2PoBmpXeK/view?usp=sharing)*
 
 ### 🔍 Deskripsi Variabel:
 
