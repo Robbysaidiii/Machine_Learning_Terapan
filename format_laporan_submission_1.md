@@ -1,4 +1,4 @@
-# 🧠 Laporan Proyek Machine Learning - Robby Saidi
+# 🧠 Laporan Proyek Machine Learning - Robby Saidi Prasetyo
 
 ---
 
