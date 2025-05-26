@@ -43,7 +43,7 @@ Dataset berisi data cuaca harian yang digunakan untuk membangun model prediksi c
 
 * Jumlah baris: 719
 * Jumlah kolom: 9
-* Sumber data: (disarankan unggah ke GitHub agar link publik)
+* Sumber data: *(upload dataset ke GitHub atau Google Drive publik jika ingin dibagikan)*
 
 ### 🔍 Deskripsi Variabel:
 
@@ -70,14 +70,18 @@ Dataset berisi data cuaca harian yang digunakan untuk membangun model prediksi c
 ### ✅ Langkah Data Preparation:
 
 1. **Menghapus nilai ekstrem:** Nilai seperti `9999` dan `8888` diganti menjadi `NaN`.
+
 2. **Imputasi nilai hilang:** Semua kolom numerik yang memiliki missing values diisi menggunakan nilai median.
+
 3. **Kategorisasi curah hujan:** Variabel `ch` dikonversi menjadi kategori:
 
    * `0`: Tidak hujan
    * `<=10`: Hujan Ringan
    * `11–20`: Hujan Sedang
    * `>20`: Hujan Deras
+
 4. **Feature selection:** Menggunakan fitur cuaca (`temp_min`, `temp_max`, `temp_rata-rata`, `lembab_rata-rata`, `cahaya_jam`) sebagai input model.
+
 5. **Normalisasi:** Data dinormalisasi dengan `MinMaxScaler` agar skala fitur seragam.
 
 ```python
@@ -143,8 +147,4 @@ Proyek ini berhasil mengklasifikasikan intensitas curah hujan menggunakan data c
 
 ---
 
-
 ![Confusion Matrix](https://github.com/Robbysaidiii/Machine_Learning_Terapan/blob/main/Cuplikan%20layar%202025-05-24%20234906.png)
-
-
----
