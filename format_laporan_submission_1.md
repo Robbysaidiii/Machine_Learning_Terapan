@@ -65,6 +65,7 @@ Sebelum dilakukan preprocessing, kondisi data adalah sebagai berikut:
 | lembab\_rata-rata | Kelembaban rata-rata harian (%) |
 | ch                | Curah hujan (mm) – target       |
 | cahaya\_jam       | Lama penyinaran matahari (jam)  |
+  ![visual\_outlier](https://github.com/Robbysaidiii/Machine_Learning_Terapan/blob/main/gambar/Cuplikan%20layar%202025-05-24%20231638.png)
 
 ---
 
