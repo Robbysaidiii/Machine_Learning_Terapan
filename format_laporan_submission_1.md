@@ -27,7 +27,7 @@ Proyek ini berada dalam domain klimatologi, yang berfokus pada prediksi curah hu
 
 ### Dataset
 
-Sumber: [Dataset Cuaca Harian dari kaggel](https://www.kaggle.com/datasets/robbysaidiii/prediksi-cuaca-csv) (pastikan mengganti dengan link dataset sebenarnya)
+Sumber: [Dataset Cuaca Harian dari kaggel](https://www.kaggle.com/datasets/robbysaidiii/prediksi-cuaca-csv) 
 
 Dataset ini berisi data cuaca harian yang terdiri dari:
 
