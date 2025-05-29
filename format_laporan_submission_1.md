@@ -66,9 +66,9 @@ Sebelum dilakukan preprocessing, kondisi data adalah sebagai berikut:
 | ch                | Curah hujan (mm) – target       |
 | cahaya\_jam       | Lama penyinaran matahari (jam)  |
  
----
- ![visual\_outlier](https://github.com/Robbysaidiii/Machine_Learning_Terapan/blob/main/gambar/Cuplikan%20layar%202025-05-26%20233959.png)
 
+ ![visual\_outlier](https://github.com/Robbysaidiii/Machine_Learning_Terapan/blob/main/gambar/Cuplikan%20layar%202025-05-26%20vv233959.png)
+---
 ## 🧹 Data Preparation
 
 ### Tahapan Persiapan Data
