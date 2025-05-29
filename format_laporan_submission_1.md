@@ -2,22 +2,24 @@
 
 ## 🌍 Domain Proyek
 
-Proyek ini berada dalam domain klimatologi, yang berfokus pada prediksi curah hujan harian berdasarkan data cuaca. Dalam era perubahan iklim global yang semakin tidak menentu, prediksi cuaca yang akurat sangat penting bagi sektor pertanian, pengelolaan bencana, dan perencanaan infrastruktur.
+Proyek ini berada dalam domain **klimatologi**, dengan fokus pada prediksi **curah hujan harian** berdasarkan data cuaca. Dalam konteks perubahan iklim dan cuaca ekstrem, prediksi curah hujan yang akurat sangat penting untuk pertanian, pengendalian banjir, dan manajemen sumber daya air.
+
+---
 
 ## 💼 Business Understanding
 
-### ❓ Problem Statements
+### ❓ Permasalahan
 
-1. Bagaimana memprediksi tingkat curah hujan berdasarkan fitur cuaca seperti suhu, kelembaban, dan durasi penyinaran matahari?
-2. Bagaimana mengelola data yang mengandung nilai ekstrem (9999, 8888) dan nilai hilang?
-3. Model seperti apa yang lebih efektif: klasifikasi kategori curah hujan, atau prediksi nilai curah hujan aktual?
+1. Bagaimana memprediksi curah hujan berdasarkan data cuaca seperti suhu, kelembaban, dan cahaya matahari?
+2. Bagaimana menangani data cuaca yang mengandung nilai ekstrem seperti 9999 atau 8888 serta nilai yang hilang?
+3. Lebih efektif mana: klasifikasi kategori curah hujan atau regresi nilai aktual?
 
-### 🎯 Goals
+### 🎯 Tujuan
 
-1. Membangun Model Klasifikasi untuk mengelompokkan curah hujan ke dalam kelas: Tidak Hujan, Hujan Ringan, Hujan Sedang
-2. Membangun Model Regresi untuk memprediksi nilai numerik dari curah hujan harian (dalam mm)
-3. Mengembangkan strategi handling data tidak seimbang untuk kelas minoritas
-4. Membersihkan dan menyiapkan data agar representatif dan tidak bias
+1. Membangun model klasifikasi untuk membedakan antara kondisi: **Tidak Hujan, Hujan Ringan, Hujan Sedang**.
+2. Membangun model regresi untuk memprediksi nilai curah hujan secara numerik (dalam mm).
+3. Mengatasi masalah **ketidakseimbangan kelas** dalam data kategori curah hujan.
+4. Melakukan pembersihan dan persiapan data agar akurat, representatif, dan siap untuk modeling.
 
 ---
 
@@ -25,130 +27,85 @@ Proyek ini berada dalam domain klimatologi, yang berfokus pada prediksi curah hu
 
 ### Dataset
 
-Sumber: [Dataset Cuaca Harian dari kaggel](https://www.kaggle.com/datasets/robbysaidiii/prediksi-cuaca-csv) 
-
-Dataset ini berisi data cuaca harian yang terdiri dari:
-
-* Jumlah baris: 719 (pengamatan harian dari tahun 2022-2023)
+* Sumber: [Kaggle - Prediksi Cuaca CSV](https://www.kaggle.com/datasets/robbysaidiii/prediksi-cuaca-csv)
+* Jumlah data: 719 baris (tahun 2022–2023)
 * Jumlah kolom: 9
 
-### Kondisi Data Awal
+### Ringkasan Kondisi Data
 
-* Missing values:
+* **Missing values** ditemukan pada kolom suhu, kelembaban, cahaya matahari, dan curah hujan.
+* **Nilai ekstrem** seperti 9999 dan 8888 teridentifikasi sebagai placeholder error dan harus dibersihkan.
+* **Outlier alami** terlihat pada beberapa kolom, terutama `lembab_rata-rata`, `ch` (curah hujan), dan `cahaya_jam`.
 
-  * temp\_min: 2 nilai hilang
-  * temp\_max: 5 nilai hilang
-  * temp\_rata-rata: 3 nilai hilang
-  * lembab\_rata-rata: 3 nilai hilang
-  * cahaya\_jam: 4 nilai hilang
-  * ch: 83 nilai hilang
-* Outliers:
-
-  * Nilai ekstrem 9999 dan 8888 ditemukan pada beberapa kolom
-  * Outlier alami ditemukan pada kolom lembab\_rata-rata (59), ch (26), dan cahaya\_jam (38)
-  * ![visual_outlier](https://github.com/Robbysaidiii/Machine_Learning_Terapan/blob/main/gambar/Cuplikan%20layar%202025-05-24%20231638.png)
-
-
-### Variabel
-
-| Kolom             | Deskripsi                       |
-| ----------------- | ------------------------------- |
-| Thn, bln, tgl     | Tanggal pencatatan              |
-| temp\_min         | Suhu minimum harian (°C)        |
-| temp\_max         | Suhu maksimum harian (°C)       |
-| temp\_rata-rata   | Suhu rata-rata harian (°C)      |
-| lembab\_rata-rata | Kelembaban rata-rata harian (%) |
-| ch                | Curah hujan (mm) – target       |
-| cahaya\_jam       | Lama penyinaran matahari (jam)  |
+Visualisasi distribusi menunjukkan adanya skew dan data tidak seimbang antar kelas curah hujan.
 
 ---
 
 ## 🧹 Data Preparation
 
-### Tahapan Persiapan Data:
+### Langkah-langkah Persiapan Data:
 
-1. **Penanganan Nilai Ekstrem**:
+1. **Penanganan Nilai Ekstrem dan Hilang**
 
-   * Mengganti nilai 9999 dan 8888 dengan NaN
-    mengatasi nilai kosong (NaN) pada beberapa kolom dalam dataset, yaitu temp_min, temp_max, temp_rata_rata, ch, dan cahaya_jam, dengan mengganti nilai kosong tersebut menggunakan nilai median dari masing-masing kolom. Penggunaan median dipilih karena lebih tahan terhadap nilai ekstrem dibandingkan rata-rata. Setelah pengisian, dilakukan pengecekan kembali menggunakan fungsi isnull().sum() untuk memastikan bahwa semua nilai kosong telah berhasil digantikan dan tidak ada lagi data yang hilang pada kolom-kolom tersebut. Langkah ini penting dalam proses pembersihan data agar analisis selanjutnya dapat berjalan dengan baik dan hasilnya lebih akurat.
+   * Nilai 9999 dan 8888 diubah menjadi kosong.
+   * Nilai kosong diisi dengan median (karena lebih tahan terhadap outlier).
 
--0 ini berarti nilai nya tidak ada nilai yang NaN (Data bersih)
-   * Imputasi nilai hilang dengan median (robust terhadap outlier)
+2. **Konversi Format Tanggal**
 
-2. **Konversi Format Tanggal**:
+   * Kolom tahun, bulan, dan tanggal digabung menjadi satu kolom bertipe datetime dan digunakan sebagai indeks waktu.
 
-   * Menggabungkan kolom Thn, bln, tgl menjadi satu kolom datetime
-   * Menjadikan kolom tanggal sebagai index
+3. **Kategorisasi Target**
 
-3. **Kategorisasi Target**:
+   * Curah hujan dikategorikan menjadi:
 
-   * ch == 0: tidak hujan
-   * ch < 20: hujan ringan
-   * ch < 50: hujan sedang
-   * ch >= 50: hujan deras
+     * `Tidak Hujan` jika `ch == 0`
+     * `Hujan Ringan` jika `ch < 20`
+     * `Hujan Sedang` jika `ch < 50`
+     * `Hujan Deras` jika `ch >= 50`
 
-4. **Encoding Label**:
+4. **Label Encoding**
 
-   * Menggunakan LabelEncoder untuk mengubah kategori menjadi nilai numerik
+   * Kategori hujan dikonversi menjadi label numerik untuk modeling klasifikasi.
 
-5. **Pemilihan Fitur**:
+5. **Pemilihan Fitur**
 
-   * Fitur yang digunakan: \['temp\_min', 'temp\_max', 'temp\_rata-rata', 'lembab\_rata-rata', 'cahaya\_jam']
-   * Target: 'label' (hasil encoding kategori hujan)
+   * Fitur yang digunakan: suhu minimum, maksimum, rata-rata, kelembaban rata-rata, dan cahaya matahari.
 
-6. **Normalisasi Data**:
+6. **Normalisasi**
 
-   * Menggunakan MinMaxScaler untuk menormalkan fitur ke rentang \[0,1]
+   * Semua fitur dinormalisasi ke dalam rentang 0–1 agar model lebih stabil.
 
-7. **Pembagian Data**:
+7. **Pembagian Data**
 
-   * Train-test split 80%-20% tanpa shuffle untuk menjaga urutan waktu
+   * Data dibagi menjadi 80% data latih dan 20% data uji tanpa pengacakan, agar urutan waktu tetap terjaga.
+
+---
+
+## 🔬 Exploratory Data Analysis (EDA)
+
+* Visualisasi distribusi kategori curah hujan menunjukkan dominasi kelas "Tidak Hujan".
+* Korelasi antar fitur menunjukkan hubungan positif antara suhu maksimum dan suhu rata-rata, namun korelasi terhadap curah hujan relatif rendah.
+* Sebagian besar hari dalam data tidak terjadi hujan, menyebabkan ketidakseimbangan kelas.
 
 ---
 
 ## 🤖 Modeling
 
-### 1. Klasifikasi – Random Forest Classifier
+### 1. **Klasifikasi – Random Forest**
 
-**Penjelasan Algoritma**:
-Random Forest adalah metode ensemble learning yang membangun banyak pohon keputusan dan menggabungkan hasilnya untuk meningkatkan akurasi dan mengurangi overfitting. Setiap pohon dilatih pada subset data dan fitur yang berbeda, kemudian hasil prediksi ditentukan melalui voting mayoritas.
+* Algoritma Random Forest digunakan untuk klasifikasi karena mampu menangani fitur non-linear dan tahan terhadap overfitting.
+* Klasifikasi dilakukan untuk mengelompokkan data menjadi 3 kelas utama: Tidak Hujan, Hujan Ringan, dan Hujan Sedang.
 
-**Keunggulan**:
+### 2. **Regresi – Linear Regression**
 
-* Robust terhadap overfitting
-* Dapat menangani fitur non-linear dan data dengan noise
-
-**Implementasi**:
-
-```python
-model = RandomForestClassifier(n_estimators=100, random_state=42)
-model.fit(X_train, y_train)
-```
-
-**Parameter**:
-
-* n\_estimators=100: Jumlah pohon dalam forest
-* random\_state=42: Untuk reproduktibilitas hasil
-
----
-
-### 2. Regresi – Linear Regression
-
-**Penjelasan Algoritma**:
-Linear Regression memodelkan hubungan linear antara variabel independen (fitur) dan dependen (target) dengan mencari garis lurus yang paling sesuai dengan data.
-
-**Implementasi**:
-
-```python
-model_reg = LinearRegression()
-model_reg.fit(X_train, y_train)
-```
+* Regresi linier digunakan untuk memprediksi nilai curah hujan harian dalam mm.
+* Model ini sederhana namun kurang cocok untuk fenomena cuaca yang bersifat kompleks dan non-linear.
 
 ---
 
 ## 🔎 Evaluation
 
-### Hasil Evaluasi Klasifikasi (Random Forest):
+### Evaluasi Klasifikasi
 
 | Kelas            | Precision | Recall | F1-score | Support |
 | ---------------- | --------- | ------ | -------- | ------- |
@@ -159,59 +116,43 @@ model_reg.fit(X_train, y_train)
 | **Macro Avg**    | 0.51      | 0.55   | 0.53     | 144     |
 | **Weighted Avg** | 0.78      | 0.81   | 0.79     | 144     |
 
-**Interpretasi**:
+**Catatan**:
 
-* Akurasi keseluruhan 81% menunjukkan model cukup baik untuk klasifikasi dasar
-* Performa bagus untuk kelas dominan (tidak hujan)
-* Gagal mengklasifikasikan "hujan sedang" karena ketidakseimbangan data (hanya 6 sampel)
+* Model berhasil memprediksi kelas "Tidak Hujan" dengan baik.
+* Kelas "Hujan Sedang" gagal diprediksi karena terlalu sedikit datanya (kelas minoritas).
 
----
+### Evaluasi Regresi
 
-### Hasil Evaluasi Regresi (Linear Regression):
+* **Mean Squared Error (MSE)**: 0.6348
+* **R² Score**: 0.2236
 
-* Mean Squared Error: 0.6348
-* R² Score: 0.2236
+**Catatan**:
 
-**Interpretasi**:
-
-* R² Score = 0.22 → hanya menjelaskan 22% variasi dalam target
-* Model linier terlalu sederhana untuk fenomena iklim yang kompleks
+* R² yang rendah (22%) menunjukkan bahwa model linier tidak dapat menangkap kompleksitas pola curah hujan secara memadai.
 
 ---
 
-### Perbandingan Model:
+## 📈 Perbandingan Model
 
-| Aspek      | Klasifikasi (RF)                  | Regresi (Linear)                   |
-| ---------- | --------------------------------- | ---------------------------------- |
-| Akurasi    | 81%                               | 22% (R² Score)                     |
-| Kelebihan  | Robust, cocok untuk data kategori | Sederhana, cepat                   |
-| Kekurangan | Sensitif terhadap imbalance kelas | Tidak bisa menangkap pola kompleks |
+| Aspek      | Klasifikasi (Random Forest)           | Regresi (Linear)                  |
+| ---------- | ------------------------------------- | --------------------------------- |
+| Akurasi    | 81%                                   | R² = 22%                          |
+| Kelebihan  | Kuat terhadap data kategori dan noise | Sederhana dan cepat               |
+| Kekurangan | Lemah terhadap kelas minoritas        | Tidak cocok untuk pola non-linear |
 
 ---
 
 ## 📌 Rekomendasi dan Kesimpulan
 
-### Rekomendasi Perbaikan:
+### Rekomendasi Perbaikan
 
-1. Untuk Klasifikasi:
+1. **Atasi ketidakseimbangan kelas** menggunakan teknik seperti SMOTE atau penyesuaian bobot kelas.
+2. **Gunakan model lanjutan** seperti XGBoost atau Gradient Boosting untuk klasifikasi dan regresi.
+3. **Tambah fitur cuaca tambahan** seperti tekanan udara, kecepatan angin, atau lag dari hari sebelumnya.
+4. **Visualisasi tambahan** seperti distribusi target sebelum/sesudah preprocessing untuk mendukung pemahaman data.
 
-   * Gunakan teknik handling imbalance class seperti SMOTE atau class weighting
-   * Coba model boosting seperti XGBoost atau Gradient Boosting
-   * Lakukan hyperparameter tuning untuk optimasi model
+### Kesimpulan
 
-2. Untuk Regresi:
-
-   * Gunakan model non-linear seperti Random Forest Regressor atau XGBoost Regressor
-   * Pertimbangkan transformasi target jika distribusi target skewed
-   * Tambahkan teknik feature engineering untuk meningkatkan representasi fitur
-
-3. Tambahkan visualisasi distribusi target sebelum dan sesudah preprocessing untuk memperjelas kondisi data
-
-### Kesimpulan:
-
-Pendekatan klasifikasi dengan Random Forest memberikan hasil yang lebih baik (akurasi 81%) dibanding regresi linier untuk prediksi curah hujan. Namun, model masih kesulitan memprediksi kelas minoritas (hujan sedang) karena ketidakseimbangan data.
-
-Langkah selanjutnya adalah memperbaiki model dengan teknik handling imbalance class dan mencoba algoritma yang lebih advanced untuk meningkatkan performa prediksi.
-
----
-
+* **Random Forest Classifier** memberikan performa terbaik (akurasi 81%) dibanding regresi linier.
+* Tantangan terbesar terletak pada **ketidakseimbangan data**, khususnya pada kelas hujan sedang dan deras.
+* Dengan perbaikan data dan model lanjutan, performa prediksi dapat ditingkatkan secara signifikan.
