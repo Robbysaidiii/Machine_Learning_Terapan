@@ -1,5 +1,3 @@
----
-
 #  Laporan Proyek Machine Learning – Roby saidi prasetyo
 
 ##  Domain Proyek
@@ -116,7 +114,7 @@ model.fit(X_train, y_train)
 
 ---
 
-### 📐 Model 2: Linear Regression
+###  Model 2: Linear Regression
 
 **Penjelasan:**
 Model regresi linier memprediksi nilai `ch` berdasarkan hubungan linier antar fitur. Cocok sebagai baseline sederhana.
@@ -131,9 +129,9 @@ model_reg.fit(X_train, y_train_regresi)
 
 ---
 
-## 🔎 Evaluation
+##  Evaluation
 
-### 📈 Evaluasi Klasifikasi – Random Forest
+###  Evaluasi Klasifikasi – Random Forest
 
 | Kelas            | Precision | Recall | F1-score | Support |
 | ---------------- | --------- | ------ | -------- | ------- |
@@ -149,7 +147,7 @@ model_reg.fit(X_train, y_train_regresi)
 
 ---
 
-### 📉 Evaluasi Regresi – Linear Regression
+###  Evaluasi Regresi – Linear Regression
 
 * **Mean Squared Error (MSE):** 0.6348
 * **R² Score:** 0.2236
