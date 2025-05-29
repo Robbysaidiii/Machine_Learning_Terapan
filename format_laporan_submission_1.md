@@ -1,160 +1,180 @@
-# 🌦️ Prediksi Curah Hujan Harian Menggunakan Machine Learning
+Berikut versi laporan proyek machine learning yang sudah rapih dan tanpa ada kata "di rumah" atau semacamnya, menggunakan format Markdown sesuai permintaanmu:
 
-## 📌 Domain Proyek
+````markdown
+# Laporan Proyek Machine Learning – Prediksi Curah Hujan Harian
 
-Proyek ini berada dalam domain **klimatologi dan lingkungan** dengan fokus pada prediksi curah hujan berdasarkan data cuaca harian. Proyek ini penting untuk perencanaan pertanian, mitigasi bencana, dan pengambilan keputusan yang bergantung pada kondisi cuaca.
+## 🌍 Domain Proyek
+Proyek ini berada dalam domain klimatologi, yang berfokus pada prediksi curah hujan harian berdasarkan data cuaca. Dalam era perubahan iklim global yang semakin tidak menentu, prediksi cuaca yang akurat sangat penting bagi sektor pertanian, pengelolaan bencana, dan perencanaan infrastruktur.
 
----
+## 💼 Business Understanding
 
-## 🧠 Business Understanding
-
-### 🎯 Problem Statements
-1. Bagaimana mengklasifikasikan kategori curah hujan berdasarkan data cuaca harian?
-2. Bagaimana memprediksi nilai aktual curah hujan (dalam mm) menggunakan regresi?
-3. Model seperti apa yang memiliki performa terbaik dalam memprediksi curah hujan?
+### ❓ Problem Statements
+1. Bagaimana memprediksi tingkat curah hujan berdasarkan fitur cuaca seperti suhu, kelembaban, dan durasi penyinaran matahari?
+2. Bagaimana mengelola data yang mengandung nilai ekstrem (9999, 8888) dan nilai hilang?
+3. Model seperti apa yang lebih efektif: klasifikasi kategori curah hujan, atau prediksi nilai curah hujan aktual?
 
 ### 🎯 Goals
-1. Membangun model klasifikasi untuk memprediksi kategori curah hujan (tidak hujan, hujan ringan, sedang, deras).
-2. Membangun model regresi untuk memprediksi nilai aktual curah hujan (dalam mm).
-3. Mengevaluasi dan membandingkan performa kedua jenis model (klasifikasi dan regresi) untuk menentukan pendekatan terbaik dalam memprediksi curah hujan.
-
----
+1. Membangun Model Klasifikasi untuk mengelompokkan curah hujan ke dalam kelas: Tidak Hujan, Hujan Ringan, Hujan Sedang
+2. Membangun Model Regresi untuk memprediksi nilai numerik dari curah hujan harian (dalam mm)
+3. Membersihkan dan menyiapkan data agar representatif dan tidak bias
 
 ## 📊 Data Understanding
 
-### 📄 Informasi Dataset
-- Jumlah baris: 719
+### Dataset
+Sumber: [Dataset Cuaca Harian](https://example.com/link-dataset) (tautan contoh, ganti dengan link dataset sebenarnya)
+
+Dataset ini berisi data cuaca harian yang terdiri dari:
+- Jumlah baris: 719 (pengamatan harian dari tahun 2022-2023)
 - Jumlah kolom: 9
-- Fitur:
-  - `Thn`, `bln`, `tgl`: Tahun, bulan, dan tanggal pencatatan data
-  - `temp_min`, `temp_max`, `temp_rata-rata`: Suhu minimum, maksimum, dan rata-rata harian (°C)
-  - `lembab_rata-rata`: Kelembaban harian rata-rata (%)
-  - `cahaya_jam`: Lama penyinaran matahari (jam)
-  - `ch`: Curah hujan aktual (mm)
 
-### ⚠️ Kondisi Data Awal
-- Terdapat **outlier dan nilai error**:
-  - `9999` pada kolom suhu dan `ch` (curah hujan)
-  - `8888` pada kolom `cahaya_jam`
-- Ditemukan **missing value** setelah nilai-nilai error diubah menjadi `NaN`
-- Setelah pengecekan `.isnull().sum()` diketahui sejumlah baris perlu dihapus
-- Dataset dibersihkan sebelum modeling
+### Kondisi Data Awal
+- Missing values:
+  - temp_min: 2 nilai hilang
+  - temp_max: 5 nilai hilang  
+  - temp_rata-rata: 3 nilai hilang
+  - lembab_rata-rata: 3 nilai hilang
+  - cahaya_jam: 4 nilai hilang
+  - ch: 83 nilai hilang
+- Outliers:
+  - Nilai ekstrem 9999 dan 8888 ditemukan pada beberapa kolom
+  - Outlier alami ditemukan pada kolom lembab_rata-rata (59), ch (26), dan cahaya_jam (38)
 
-### 🌐 Sumber Data
-Data diambil dari:
-[https://data.bmkg.go.id/dataku/cuaca-harian](https://data.bmkg.go.id/dataku/cuaca-harian)
-
----
+### Variabel
+| Kolom       | Deskripsi                         |
+|-------------|---------------------------------|
+| Thn, bln, tgl | Tanggal pencatatan             |
+| temp_min    | Suhu minimum harian (°C)         |
+| temp_max    | Suhu maksimum harian (°C)        |  
+| temp_rata-rata | Suhu rata-rata harian (°C)     |
+| lembab_rata-rata | Kelembaban rata-rata harian (%) |
+| ch          | Curah hujan (mm) – target        |
+| cahaya_jam  | Lama penyinaran matahari (jam)   |
 
 ## 🧹 Data Preparation
 
-### Langkah-Langkah:
+### Tahapan Persiapan Data:
+1. **Penanganan Nilai Ekstrem**:
+   - Mengganti nilai 9999 dan 8888 dengan NaN
+   - Imputasi nilai hilang dengan median (robust terhadap outlier)
 
-1. **Pembersihan Data**:
-   - Nilai `9999` dan `8888` diubah menjadi `NaN`
-   - Baris dengan `NaN` dihapus
+2. **Konversi Format Tanggal**:
+   - Menggabungkan kolom Thn, bln, tgl menjadi satu kolom datetime
+   - Menjadikan kolom tanggal sebagai index
 
-2. **Konversi Tanggal**:
-   - Kolom `Thn`, `bln`, `tgl` digabung menjadi kolom `tanggal` dengan format datetime
-   - Digunakan sebagai indeks dataframe
+3. **Kategorisasi Target**:
+   - ch == 0: tidak hujan  
+   - ch < 20: hujan ringan
+   - ch < 50: hujan sedang
+   - ch >= 50: hujan deras
 
-3. **Kategorisasi Target untuk Klasifikasi**:
-   - `ch == 0`: Tidak hujan
-   - `0 < ch ≤ 20`: Hujan ringan
-   - `20 < ch ≤ 50`: Hujan sedang
-   - `ch > 50`: Hujan deras
-   - Label dikodekan menggunakan `LabelEncoder`
+4. **Encoding Label**:
+   - Menggunakan LabelEncoder untuk mengubah kategori menjadi nilai numerik
 
-4. **Normalisasi Fitur**:
-   - Fitur numerik (`temp_min`, `temp_max`, `temp_rata-rata`, `lembab_rata-rata`, `cahaya_jam`) dinormalisasi menggunakan `MinMaxScaler`
+5. **Pemilihan Fitur**:
+   - Fitur yang digunakan: ['temp_min', 'temp_max', 'temp_rata-rata', 'lembab_rata-rata', 'cahaya_jam']
+   - Target: 'label' (hasil encoding kategori hujan)
 
-5. **Pemilihan Fitur (Feature Selection)**:
-   - Input model: `temp_min`, `temp_max`, `temp_rata-rata`, `lembab_rata-rata`, `cahaya_jam`
+6. **Normalisasi Data**:
+   - Menggunakan MinMaxScaler untuk menormalkan fitur ke rentang [0,1]
 
-6. **Pembagian Dataset**:
-   - Data dibagi menjadi data latih (80%) dan data uji (20%) menggunakan `train_test_split`
-
----
+7. **Pembagian Data**:
+   - Train-test split 80%-20% tanpa shuffle untuk menjaga urutan waktu
 
 ## 🤖 Modeling
 
-### 1. Random Forest Classifier
+### 1. Klasifikasi – Random Forest Classifier
 
-#### ✅ Cara Kerja:
-- Merupakan algoritma **ensemble learning** yang menggabungkan banyak decision tree
-- Menggunakan teknik **bagging** untuk menghasilkan model yang lebih stabil dan akurat
-- Prediksi akhir ditentukan dengan voting mayoritas dari semua tree
+**Penjelasan Algoritma**:
+Random Forest adalah metode ensemble learning yang membangun banyak pohon keputusan dan menggabungkan hasilnya untuk meningkatkan akurasi dan mengurangi overfitting. Setiap pohon dilatih pada subset data dan fitur yang berbeda, kemudian hasil prediksi ditentukan melalui voting mayoritas.
 
-#### 🔧 Parameter Utama:
-- `n_estimators = 100`
-- `random_state = 42`
+**Implementasi**:
+```python
+model = RandomForestClassifier(n_estimators=100, random_state=42)
+model.fit(X_train, y_train)
+````
 
-#### 🎯 Tujuan:
-- Mengklasifikasikan curah hujan ke dalam 4 kategori
+**Parameter**:
 
----
+* n\_estimators=100: Jumlah pohon dalam forest
+* random\_state=42: Untuk reproduktibilitas hasil
 
-### 2. Linear Regression
+### 2. Regresi – Linear Regression
 
-#### ✅ Cara Kerja:
-- Mencari hubungan linear antara variabel input (fitur cuaca) dengan target (curah hujan)
-- Berdasarkan persamaan: `y = β0 + β1x1 + β2x2 + ... + βnxn`
-- Digunakan untuk regresi nilai kontinu
+**Penjelasan Algoritma**:
+Linear Regression memodelkan hubungan linear antara variabel independen (fitur) dan dependen (target) dengan mencari garis lurus yang paling sesuai dengan data.
 
-#### 🔧 Parameter:
-- Menggunakan parameter default dari `LinearRegression` di `scikit-learn`
+**Implementasi**:
 
-#### 🎯 Tujuan:
-- Memprediksi nilai aktual curah hujan dalam satuan mm
+```python
+model_reg = LinearRegression()
+model_reg.fit(X_train, y_train)
+```
 
----
+## 🔎 Evaluation
 
-## 📈 Evaluation
+### Hasil Evaluasi Klasifikasi (Random Forest):
 
-### 📌 Random Forest Classifier
+```
+              precision    recall  f1-score   support
 
-#### 🔍 Metrik Evaluasi:
-- **Accuracy**
-- **Precision**, **Recall**, dan **F1-score**
-- **Confusion Matrix**
+hujan ringan       0.65      0.76      0.70        42
+hujan sedang       0.00      0.00      0.00         6
+ tidak hujan       0.88      0.88      0.88        96
 
-#### 🧪 Hasil Evaluasi:
-- Accuracy: **0.85**
-- F1-score (macro avg): **0.84**
+    accuracy                           0.81       144
+   macro avg       0.51      0.55      0.53       144
+weighted avg       0.78      0.81      0.79       144
+```
 
-#### 💡 Interpretasi:
-- Model cukup handal dalam mengklasifikasikan kategori curah hujan
-- Beberapa kebingungan terjadi antara kelas hujan sedang dan deras
+**Interpretasi**:
 
----
+* Akurasi keseluruhan: 81% - baik untuk klasifikasi dasar
+* Performa bagus untuk kelas dominan (tidak hujan)
+* Gagal mengklasifikasikan "hujan sedang" karena data sangat sedikit (hanya 6 sampel)
 
-### 📌 Linear Regression
+### Hasil Evaluasi Regresi (Linear Regression):
 
-#### 🔍 Metrik Evaluasi:
-- **Mean Squared Error (MSE)**
-- **R² Score**
+```
+Mean Squared Error: 0.6348
+R² Score: 0.2236
+```
 
-#### 🧪 Hasil Evaluasi:
-- MSE: **15.3**
-- R² Score: **0.62**
+**Interpretasi**:
 
-#### 💡 Interpretasi:
-- Model dapat menjelaskan sebagian besar variasi curah hujan
-- Namun, cenderung kurang akurat pada prediksi nilai ekstrem
+* R² Score = 0.22 → hanya menjelaskan 22% variasi dalam target
+* Model linier terlalu sederhana untuk fenomena iklim yang kompleks
 
----
+### Perbandingan Model:
 
-### 📊 Kesimpulan Evaluasi
+| Aspek      | Klasifikasi (RF)                  | Regresi (Linear)                   |
+| ---------- | --------------------------------- | ---------------------------------- |
+| Akurasi    | 81%                               | 22% (setelah pembulatan)           |
+| Kelebihan  | Robust, cocok untuk data kategori | Sederhana, cepat                   |
+| Kekurangan | Sensitif terhadap imbalance kelas | Tidak bisa menangkap pola kompleks |
 
-- Model **Random Forest Classifier** efektif untuk klasifikasi kategori hujan
-- Model **Linear Regression** baik untuk estimasi angka, namun sensitif terhadap outlier
-- Kombinasi kedua pendekatan bisa digunakan sesuai kebutuhan (klasifikasi atau numerik)
+## 📌 Rekomendasi dan Kesimpulan
 
----
+### Rekomendasi Perbaikan:
 
-## ✅ Penutup
+1. Untuk Klasifikasi:
 
-Proyek ini membuktikan bahwa machine learning dapat digunakan untuk memprediksi curah hujan harian berdasarkan data cuaca. Model klasifikasi (Random Forest) menunjukkan hasil yang sangat baik dalam mengklasifikasikan intensitas hujan, sementara model regresi (Linear Regression) cukup akurat dalam memperkirakan nilai curah hujan aktual.
+   * Gunakan teknik handling imbalance class (SMOTE atau class weights)
+   * Coba model boosting seperti XGBoost atau Gradient Boosting
+   * Lakukan hyperparameter tuning
 
-Penggunaan model ini dapat bermanfaat untuk pengambilan keputusan di bidang pertanian, manajemen bencana, dan perencanaan infrastruktur berbasis cuaca.
+2. Untuk Regresi:
 
+   * Gunakan model non-linear seperti Random Forest Regressor
+   * Pertimbangkan transformasi target jika distribusi skewed
+   * Tambahkan feature engineering
+
+### Kesimpulan:
+
+Pendekatan klasifikasi dengan Random Forest memberikan hasil yang lebih baik (akurasi 81%) dibanding regresi linier untuk memprediksi curah hujan. Namun, model masih kesulitan memprediksi kelas minoritas (hujan sedang) karena ketidakseimbangan data.
+
+Langkah selanjutnya adalah memperbaiki model dengan teknik handling imbalance class dan mencoba algoritma yang lebih advanced untuk meningkatkan performa prediksi.
+
+```
+
+Kalau ada yang mau kamu tambah atau ubah, bilang aja ya!
+```
