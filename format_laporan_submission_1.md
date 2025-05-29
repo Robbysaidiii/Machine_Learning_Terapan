@@ -48,8 +48,8 @@ Sebelum dilakukan preprocessing, kondisi data adalah sebagai berikut:
 
 * **Outlier dan nilai ekstrem:**
 
-  * Nilai 9999 dan 8888 ditemukan pada beberapa kolom sebagai nilai ekstrim yang perlu dihapus atau digantikan.
-  * Outlier alami juga diamati, misalnya nilai lembab\_rata-rata 59, nilai ch 26, dan cahaya\_jam 38 yang berada di luar distribusi normal.
+  * Nilai 9999 dan 8888 ditemukan pada beberapa kolom sebagai nilai ekstrim yang perlu diubah menjadi NAAN .
+  * Outlier alami juga diamati, lembab\_rata-rata 59, nilai ch 26, dan cahaya\_jam 38 yang berada di luar distribusi normal.
 
 * **Visualisasi outlier:**
   ![visual\_outlier](https://github.com/Robbysaidiii/Machine_Learning_Terapan/blob/main/gambar/Cuplikan%20layar%202025-05-24%20231638.png)
