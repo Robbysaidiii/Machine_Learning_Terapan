@@ -139,6 +139,7 @@ Visualisasi distribusi menunjukkan adanya skew dan data tidak seimbang antar kel
 | Akurasi    | 81%                                   | R² = 22%                          |
 | Kelebihan  | Kuat terhadap data kategori dan noise | Sederhana dan cepat               |
 | Kekurangan | Lemah terhadap kelas minoritas        | Tidak cocok untuk pola non-linear |
+![deskripsi gambar](URL_atau_path_gambar)
 
 ---
 
