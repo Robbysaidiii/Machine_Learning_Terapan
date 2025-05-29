@@ -48,7 +48,7 @@ Sebelum dilakukan preprocessing, kondisi data adalah sebagai berikut:
 
 * **Outlier dan nilai ekstrem:**
 
-  * Nilai 9999 dan 8888 ditemukan pada beberapa kolom sebagai nilai ekstrim yang perlu diubah menjadi NAAN .
+  * Nilai 9999 dan 8888 ditemukan pada beberapa kolom sebagai nilai ekstrim yang perlu diubah menjadi NAN .
   * Outlier alami juga diamati, lembab\_rata-rata 59, nilai ch 26, dan cahaya\_jam 38 yang berada di luar distribusi normal.
 
 * **Visualisasi outlier:**
