@@ -46,6 +46,8 @@ Dataset ini berisi data cuaca harian yang terdiri dari:
 
   * Nilai ekstrem 9999 dan 8888 ditemukan pada beberapa kolom
   * Outlier alami ditemukan pada kolom lembab\_rata-rata (59), ch (26), dan cahaya\_jam (38)
+  * ![Judul Gambar](path/ke/gambar.png)
+
 
 ### Variabel
 
