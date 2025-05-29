@@ -70,6 +70,9 @@ Dataset ini berisi data cuaca harian yang terdiri dari:
 1. **Penanganan Nilai Ekstrem**:
 
    * Mengganti nilai 9999 dan 8888 dengan NaN
+    mengatasi nilai kosong (NaN) pada beberapa kolom dalam dataset, yaitu temp_min, temp_max, temp_rata_rata, ch, dan cahaya_jam, dengan mengganti nilai kosong tersebut menggunakan nilai median dari masing-masing kolom. Penggunaan median dipilih karena lebih tahan terhadap nilai ekstrem dibandingkan rata-rata. Setelah pengisian, dilakukan pengecekan kembali menggunakan fungsi isnull().sum() untuk memastikan bahwa semua nilai kosong telah berhasil digantikan dan tidak ada lagi data yang hilang pada kolom-kolom tersebut. Langkah ini penting dalam proses pembersihan data agar analisis selanjutnya dapat berjalan dengan baik dan hasilnya lebih akurat.
+
+-0 ini berarti nilai nya tidak ada nilai yang NaN (Data bersih)
    * Imputasi nilai hilang dengan median (robust terhadap outlier)
 
 2. **Konversi Format Tanggal**:
