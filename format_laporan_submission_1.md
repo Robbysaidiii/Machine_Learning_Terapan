@@ -1,6 +1,4 @@
-Tentu! Berikut seluruh laporan proyek machine learning lengkap dalam format Markdown (.md) yang bisa kamu pakai langsung:
 
-````markdown
 # Laporan Proyek Machine Learning – Prediksi Curah Hujan Harian
 
 ## 🌍 Domain Proyek
@@ -91,20 +89,18 @@ Random Forest adalah metode ensemble learning yang membangun banyak pohon keputu
 ```python
 model = RandomForestClassifier(n_estimators=100, random_state=42)
 model.fit(X_train, y_train)
-````
+```
 
 **Parameter**:
-
-* n\_estimators=100: Jumlah pohon dalam forest
-* random\_state=42: Untuk reproduktibilitas hasil
+- n_estimators=100: Jumlah pohon dalam forest  
+- random_state=42: Untuk reproduktibilitas hasil
 
 ### 2. Regresi – Linear Regression
 
-**Penjelasan Algoritma**:
+**Penjelasan Algoritma**:  
 Linear Regression memodelkan hubungan linear antara variabel independen (fitur) dan dependen (target) dengan mencari garis lurus yang paling sesuai dengan data.
 
 **Implementasi**:
-
 ```python
 model_reg = LinearRegression()
 model_reg.fit(X_train, y_train)
@@ -113,7 +109,6 @@ model_reg.fit(X_train, y_train)
 ## 🔎 Evaluation
 
 ### Hasil Evaluasi Klasifikasi (Random Forest):
-
 ```
               precision    recall  f1-score   support
 
@@ -126,55 +121,42 @@ hujan sedang       0.00      0.00      0.00         6
 weighted avg       0.78      0.81      0.79       144
 ```
 
-**Interpretasi**:
-
-* Akurasi keseluruhan: 81% - baik untuk klasifikasi dasar
-* Performa bagus untuk kelas dominan (tidak hujan)
-* Gagal mengklasifikasikan "hujan sedang" karena data sangat sedikit (hanya 6 sampel)
+**Interpretasi**:  
+- Akurasi keseluruhan: 81% - baik untuk klasifikasi dasar  
+- Performa bagus untuk kelas dominan (tidak hujan)  
+- Gagal mengklasifikasikan "hujan sedang" karena data sangat sedikit (hanya 6 sampel)
 
 ### Hasil Evaluasi Regresi (Linear Regression):
-
 ```
 Mean Squared Error: 0.6348
 R² Score: 0.2236
 ```
 
-**Interpretasi**:
-
-* R² Score = 0.22 → hanya menjelaskan 22% variasi dalam target
-* Model linier terlalu sederhana untuk fenomena iklim yang kompleks
+**Interpretasi**:  
+- R² Score = 0.22 → hanya menjelaskan 22% variasi dalam target  
+- Model linier terlalu sederhana untuk fenomena iklim yang kompleks
 
 ### Perbandingan Model:
-
-| Aspek      | Klasifikasi (RF)                  | Regresi (Linear)                   |
-| ---------- | --------------------------------- | ---------------------------------- |
-| Akurasi    | 81%                               | 22% (setelah pembulatan)           |
-| Kelebihan  | Robust, cocok untuk data kategori | Sederhana, cepat                   |
+| Aspek      | Klasifikasi (RF)  | Regresi (Linear)      |
+|------------|-------------------|-----------------------|
+| Akurasi    | 81%               | 22% (setelah pembulatan) |
+| Kelebihan  | Robust, cocok untuk data kategori | Sederhana, cepat    |
 | Kekurangan | Sensitif terhadap imbalance kelas | Tidak bisa menangkap pola kompleks |
 
 ## 📌 Rekomendasi dan Kesimpulan
 
 ### Rekomendasi Perbaikan:
-
 1. Untuk Klasifikasi:
-
-   * Gunakan teknik handling imbalance class (SMOTE atau class weights)
-   * Coba model boosting seperti XGBoost atau Gradient Boosting
-   * Lakukan hyperparameter tuning
+   - Gunakan teknik handling imbalance class (SMOTE atau class weights)  
+   - Coba model boosting seperti XGBoost atau Gradient Boosting  
+   - Lakukan hyperparameter tuning
 
 2. Untuk Regresi:
+   - Gunakan model non-linear seperti Random Forest Regressor  
+   - Pertimbangkan transformasi target jika distribusi skewed  
+   - Tambahkan feature engineering
 
-   * Gunakan model non-linear seperti Random Forest Regressor
-   * Pertimbangkan transformasi target jika distribusi skewed
-   * Tambahkan feature engineering
-
-### Kesimpulan:
-
+### Kesimpulan:  
 Pendekatan klasifikasi dengan Random Forest memberikan hasil yang lebih baik (akurasi 81%) dibanding regresi linier untuk memprediksi curah hujan. Namun, model masih kesulitan memprediksi kelas minoritas (hujan sedang) karena ketidakseimbangan data.
 
 Langkah selanjutnya adalah memperbaiki model dengan teknik handling imbalance class dan mencoba algoritma yang lebih advanced untuk meningkatkan performa prediksi.
-
-```
-
-Kalau mau aku bantu buatkan file `.md` ini agar bisa langsung kamu download juga, kasih tau ya!
-```
